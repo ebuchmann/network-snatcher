@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Network Snatcher</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+</head>
+
+<body>
+  <ul id="messages"></ul>
+
+  <script>
+    var socket = io.connect('http://localhost:3000');
+    const messages = document.querySelector('#messages');
+    console.log(messages)
+
+    socket.on('data', data => {
+      console.log(data)
+      const message = document.createElement('li');
+      message.innerHTML = JSON.stringify(data);
+      messages.appendChild(message);
+    })
+  </script>
+</body>
+
+</html>

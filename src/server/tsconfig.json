@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "jsx": "react",
+    "baseUrl": "/src",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2015"],
+    "paths": {
+      "lodash/*": ["node_modules/@types/lodash-es/*"]
+    }
+  }
+}
