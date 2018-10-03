@@ -1,0 +1,11 @@
+body {
+  background-color: rgb(39, 40, 34);
+  color: #eaeaea;
+  font-family: 'Hind', sans-serif;
+  padding: 16px;
+}
+
+pre {
+  font-family: 'PT Mono', monospace;
+  line-height: 1.3;
+}

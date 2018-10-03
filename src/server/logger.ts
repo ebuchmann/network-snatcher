@@ -1,5 +1,6 @@
 import * as http from 'http';
 import * as zlib from 'zlib';
+import * as shortid from 'shortid';
 import { EventEmitter } from 'events';
 import { pick } from 'lodash';
 
@@ -20,23 +21,36 @@ class Logger extends EventEmitter {
     // @ts-ignore
     http.request = (options, callback) => {
       const request = this.original(options, callback);
-      const id = Math.random();
 
       const obj = {
+        id: shortid.generate(),
+        headers: {},
         request: {} as Req,
-        response: {},
+        response: {
+          data: {},
+          headers: {},
+          statusCode: null,
+        },
       };
 
+      console.log(request);
       obj.request = pick(options, ['method', 'path', 'port', 'hostname']);
 
       request.on('response', async res => {
-        console.log(`Res: ${id}`);
+        // console.log(res);
+        obj.response.headers = res.headers;
+        obj.response.statusCode = res.statusCode;
         if (res.headers['content-encoding'] === 'gzip') {
-          obj.response = await this.handleGzip(res);
+          obj.response.data = await this.handleGzip(res);
         } else {
-          obj.response = await this.handleBuffer(res);
+          obj.response.data = await this.handleBuffer(res);
         }
         this.emit('ended', obj);
+      });
+
+      request.on('error', a => {
+        console.log('er');
+        console.log(a);
       });
 
       return request;

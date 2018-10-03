@@ -12,13 +12,13 @@ module.exports = {
     app: './index.tsx',
   },
   output: {
-    path: path.join(basePath, 'dist'),
+    path: path.join(basePath, '..', '..', 'dist'),
     filename: '[name].js',
   },
   module: {
     rules: [
       {
-        test: /\.tsx$/,
+        test: /\.ts(x)?$/,
         exclude: /node_modules/,
         loader: 'awesome-typescript-loader',
         options: {
@@ -32,6 +32,10 @@ module.exports = {
         options: {
           name: 'assets/img/[name].[ext]?[hash]',
         },
+      },
+      {
+        test: /\.css$/,
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
       },
     ],
   },

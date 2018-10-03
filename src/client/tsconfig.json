@@ -3,11 +3,14 @@
     "target": "es6",
     "module": "es6",
     "moduleResolution": "node",
+    "experimentalDecorators": true,
     "declaration": false,
     "noImplicitAny": false,
     "sourceMap": true,
     "jsx": "react",
+    "lib": ["es2017", "dom"],
     "noLib": false,
+    "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": true
   },
   "exclude": ["node_modules"]

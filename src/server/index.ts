@@ -3,12 +3,12 @@ import axios from 'axios';
 import logger from './logger';
 import * as fetch from 'isomorphic-fetch';
 
-const PORT = 3000;
+const PORT = 3002;
 const app = express();
 const server = require('http').createServer(app);
 
 const io = require('socket.io')(server);
-logger.init();
+// logger.init();
 
 io.on('connection', client => {
   logger.on('ended', data => {
@@ -18,10 +18,17 @@ io.on('connection', client => {
 });
 
 app.get('/', async (req, res) => {
-  const data2 = await fetch('https://swapi.co/api/planets/1/');
+  // const data2 = await fetch('https://swapi.co/api/planets/1/');
   // console.log(await data.json());
-  const { data } = await axios.get('https://swapi.co/api/planets/1/');
+  const { data } = await axios.get('https://swapi.co/api/planets/2/');
   // res.send(data);
+  // try {
+  //   const { data } = await axios.post('http://localhost:3000/post', {
+  //     prop: 'val',
+  //     TESTING: 'LOOK AT ME',
+  //   });
+  //   //   const data4 = await fetch('https://notasite123456.com');
+  // } catch (error) {}
   res.send('ok');
 });
 
@@ -29,6 +36,12 @@ app.get('/network-snatcher', function(req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-server.listen(PORT, () => {
-  console.log('express running on port 3000');
+app.get('/app.js', (req, res) => {
+  res.sendFile(__dirname + '/app.js');
 });
+
+server.listen(PORT, () => {
+  console.log(`express running on port ${PORT}`);
+});
+
+export default logger;
