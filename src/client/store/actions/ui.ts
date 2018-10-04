@@ -11,3 +11,10 @@ export const setTab = (tab: string) => ({
     tab,
   },
 });
+
+export const setFilter = (text: string) => ({
+  type: 'SET_FILTER',
+  payload: {
+    text,
+  },
+});

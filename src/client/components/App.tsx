@@ -21,7 +21,7 @@ export class App extends React.Component {
 
 const Container = styled('div')`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 35% 65%;
   grid-column-gap: 32px;
 `;
 

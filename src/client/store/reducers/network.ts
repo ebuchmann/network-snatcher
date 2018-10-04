@@ -19,6 +19,9 @@ const network = (state = {}, { type, payload }) => {
       const { id } = payload;
       return { ...state, ...{ [id]: payload } };
     }
+    case 'CLEAR_REQUESTS': {
+      return {};
+    }
     default:
       return state;
   }

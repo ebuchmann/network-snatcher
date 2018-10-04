@@ -2,32 +2,41 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import RequestItem from './RequestItem';
 import { Request } from '../store/reducers/network';
+import ScrollContainer from './ScrollContainer';
+import HostFilter from './HostFilter';
+import ClearRequests from './ClearRequests';
 
 interface Props {
   requests: { [id: string]: Request };
+  hostFilter: string;
   setRequest: (id: string) => void;
+  setFilter: (text: string) => void;
+  clearRequests: () => void;
 }
 
 export class RequestList extends React.Component<Props, null> {
   render() {
-    const items = Object.values(this.props.requests).map(request => (
-      <RequestItem
-        setRequest={this.props.setRequest}
-        key={request.id}
-        id={request.id}
-        statusCode={request.response.statusCode}
-        {...request.request}
-      />
-    ));
+    const { hostFilter, setRequest, requests, setFilter, clearRequests } = this.props;
+    const items = Object.values(requests)
+      .filter(request => request.request.path.includes(hostFilter))
+      .reverse()
+      .map(request => (
+        <RequestItem
+          setRequest={setRequest}
+          key={request.id}
+          id={request.id}
+          statusCode={request.response.statusCode}
+          {...request.request}
+        />
+      ));
 
     return (
       <React.Fragment>
         <Header>
-          <span>Method</span>
-          <span>Host</span>
-          <span>Status</span>
+          <HostFilter setFilter={setFilter} hostFilter={hostFilter} />
+          <ClearRequests clearRequests={clearRequests} />
         </Header>
-        {items}
+        <ScrollContainer>{items}</ScrollContainer>
       </React.Fragment>
     );
   }
@@ -36,7 +45,7 @@ export class RequestList extends React.Component<Props, null> {
 const Header = styled('div')`
   border-bottom: 2px solid #999;
   display: grid;
-  grid-template-columns: 15% 75% 10%;
+  grid-template-columns: 80% 20%;
   padding: 10px 0;
 `;
 

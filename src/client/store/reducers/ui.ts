@@ -1,6 +1,7 @@
 const defaultState = () => ({
   selectedRequest: null,
   selectedTab: 'response',
+  hostFilter: '',
 });
 
 const ui = (state = defaultState(), { type, payload }) => {
@@ -10,6 +11,9 @@ const ui = (state = defaultState(), { type, payload }) => {
     }
     case 'SET_TAB': {
       return { ...state, selectedTab: payload.tab };
+    }
+    case 'SET_FILTER': {
+      return { ...state, hostFilter: payload.text };
     }
     default:
       return state;
