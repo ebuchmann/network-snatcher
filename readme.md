@@ -2,6 +2,17 @@
 
 ## Usage
 
+To install: `npm install network-snatcher -D` or `yarn add -D network-snatcher`
+
+To run: Import the package and run the init function, providing it a port to run on.
+
+```
+const networkSnatcher = require('network-snatcher');
+networkSnatcher.init(3002);
+```
+
+Go to: `http://localhost:3002`. It will show you the network requests that your Node app is making. Useful to see the requests GraphQL is making.
+
 ## Todo
 
 - Make more usable in projects

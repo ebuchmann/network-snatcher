@@ -6,7 +6,7 @@ import './styles.css';
 import store from './store';
 import App from './components/App';
 
-const socket = io.connect('http://localhost:3002');
+const socket = io.connect('/');
 
 socket.on('data', data => {
   store.addRequest(data);

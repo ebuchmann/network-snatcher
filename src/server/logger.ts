@@ -25,7 +25,7 @@ class Logger extends EventEmitter {
         console.log(options);
       }
 
-      // if (options.hostname === '127.0.0.1') return request;
+      if (options.hostname === '127.0.0.1') return request;
 
       const obj = {
         id: shortid.generate(),
