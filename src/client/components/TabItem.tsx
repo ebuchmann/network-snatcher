@@ -1,18 +1,15 @@
 import * as React from 'react';
 import styled, { cx } from 'react-emotion';
+import { view } from 'react-easy-state';
+import store from '../store';
 
-interface Props {
-  onClick: () => void;
-  selectedTab: string;
-}
-
-export class TabItem extends React.Component<Props> {
+export class TabItem extends React.Component {
   render() {
-    const { onClick } = this.props;
-    const isSelected = this.props.selectedTab === this.props.children.toString().toLowerCase();
+    const tabName = this.props.children.toString().toLowerCase();
+    const isSelected = store.selectedTab === tabName;
 
     return (
-      <Tab onClick={onClick} className={cx({ isSelected })}>
+      <Tab onClick={() => store.setUiItem('selectedTab', tabName)} className={cx({ isSelected })}>
         {this.props.children}
       </Tab>
     );
@@ -34,4 +31,4 @@ const Tab = styled('span')<TabProps>`
   }
 `;
 
-export default TabItem;
+export default view(TabItem);

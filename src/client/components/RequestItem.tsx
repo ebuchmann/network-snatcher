@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import { view } from 'react-easy-state';
+import store from '../store';
 
 interface Props {
   id: string;
@@ -8,16 +10,17 @@ interface Props {
   path: string;
   port: number;
   statusCode: number;
-  selectedRequest: string;
-  setRequest: (id: string) => void;
 }
 
 export class RequestItem extends React.Component<Props, null> {
   render() {
-    const { id, hostname, method, path, statusCode, selectedRequest } = this.props;
+    const { id, hostname, method, path, statusCode } = this.props;
 
     return (
-      <Item onClick={() => this.props.setRequest(id)} selected={id === selectedRequest}>
+      <Item
+        onClick={() => store.setUiItem('selectedRequest', id)}
+        selected={id === store.selectedRequest}
+      >
         <Method>{method}</Method>
         <Path>
           {hostname}
@@ -63,4 +66,4 @@ const Code = styled('span')<{ statusCode: number }>`
   `};
 `;
 
-export default RequestItem;
+export default view(RequestItem);

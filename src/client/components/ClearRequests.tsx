@@ -1,15 +1,10 @@
 import * as React from 'react';
+import store from '../store';
 
-interface Props {
-  clearRequests: () => void;
-}
-
-export class ClearRequests extends React.Component<Props, null> {
+export class ClearRequests extends React.Component {
   render() {
-    const { clearRequests } = this.props;
-
     return (
-      <span onClick={clearRequests} style={{ justifySelf: 'right' }}>
+      <span onClick={store.clearRequests} style={{ justifySelf: 'right' }}>
         Clear list
       </span>
     );

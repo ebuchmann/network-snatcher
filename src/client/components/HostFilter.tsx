@@ -1,14 +1,11 @@
 import * as React from 'react';
 import styled from 'react-emotion';
+import { view } from 'react-easy-state';
+import store from '../store';
 
-interface Props {
-  hostFilter: string;
-  setFilter: (text: string) => void;
-}
-
-export class HostFilter extends React.Component<Props, null> {
+export class HostFilter extends React.Component {
   render() {
-    const { hostFilter, setFilter } = this.props;
+    const { hostFilter, setUiItem } = store;
 
     return (
       <Container>
@@ -22,11 +19,11 @@ export class HostFilter extends React.Component<Props, null> {
           type="text"
           placeholder="Filter requests"
           value={hostFilter}
-          onChange={e => setFilter(e.target.value)}
+          onChange={e => setUiItem('hostFilter', e.target.value)}
         />
         {hostFilter && (
           <svg
-            onClick={setFilter.bind(this, '')}
+            onClick={setUiItem.bind(this, 'hostFilter', '')}
             style={{ width: 20, height: 20 }}
             viewBox="0 0 24 24"
           >
@@ -57,4 +54,4 @@ const Input = styled('input')`
   }
 `;
 
-export default HostFilter;
+export default view(HostFilter);

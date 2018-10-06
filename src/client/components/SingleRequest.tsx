@@ -1,20 +1,16 @@
 import * as React from 'react';
 import ReactJson from 'react-json-view';
-import { Request } from '../store/reducers/network';
+import { view } from 'react-easy-state';
 import ScrollContainer from './ScrollContainer';
+import store from '../store';
 
-interface Props {
-  request: Request;
-  selectedTab: string;
-}
-
-export class SingleRequest extends React.Component<Props, null> {
+export class SingleRequest extends React.Component {
   render() {
-    const { request, selectedTab } = this.props;
+    const request = store.requests[store.selectedRequest];
 
     if (!request) return null;
 
-    const src = selectedTab === 'response' ? request.response.data : request.response.headers;
+    const src = store.selectedTab === 'response' ? request.response.data : request.response.headers;
 
     return (
       <ScrollContainer>
@@ -24,4 +20,4 @@ export class SingleRequest extends React.Component<Props, null> {
   }
 }
 
-export default SingleRequest;
+export default view(SingleRequest);
