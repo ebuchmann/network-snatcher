@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'react-emotion';
 
-import RequestList from '../containers/RequestList';
-import SingleRequest from '../containers/SingleRequest';
+import RequestList from '../components/RequestList';
+import SingleRequest from '../components/SingleRequest';
+import SingleTabs from '../components/SingleTabs';
 
 export class App extends React.Component {
   render() {
@@ -12,6 +13,7 @@ export class App extends React.Component {
           <RequestList />
         </Column>
         <Column>
+          <SingleTabs />
           <SingleRequest />
         </Column>
       </Container>
