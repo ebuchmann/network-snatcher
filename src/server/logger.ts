@@ -3,7 +3,6 @@ import * as zlib from 'zlib';
 import * as shortid from 'shortid';
 import { parse } from 'querystring';
 import { EventEmitter } from 'events';
-import { pick } from 'lodash';
 
 interface Req {
   method: string;
@@ -40,7 +39,8 @@ class Logger extends EventEmitter {
         endTime: null,
       };
 
-      obj.request = pick(options, ['method', 'path', 'port', 'hostname']);
+      const { method, path, port, hostname } = options;
+      obj.request = { method, path, port, hostname };
 
       if (request.method.toUpperCase() === 'POST') {
         let body = '';

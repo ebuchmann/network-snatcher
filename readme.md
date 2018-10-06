@@ -13,4 +13,3 @@
 - Fix localhost / 127.0.0.1 duplication (?)
 - Figure out NPM and fix dependencies so more are dev
 - Adjust emits so it sends the req and then res
-- Remove lodash, not used much

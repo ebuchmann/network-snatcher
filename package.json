@@ -19,8 +19,6 @@
     "express": "^4.16.3",
     "global-request-logger": "^0.1.1",
     "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.11",
-    "lodash-es": "^4.17.11",
     "mitm": "^1.4.0",
     "normalize.css": "^8.0.0",
     "react": "^16.5.2",
@@ -34,7 +32,6 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.0",
-    "@types/lodash-es": "^4.17.1",
     "@types/react": "^16.4.14",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
