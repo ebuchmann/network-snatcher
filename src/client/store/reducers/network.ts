@@ -11,6 +11,8 @@ export interface Request {
     headers: any;
     statusCode: number;
   };
+  startTime: number;
+  endTime: number | null;
 }
 
 const network = (state = {}, { type, payload }) => {

@@ -24,7 +24,7 @@ interface TabProps {
 }
 
 const Tab = styled('span')<TabProps>`
-  padding: 10px;
+  padding: 10px 10px 11px 10px;
   display: inline-block;
   cursor: pointer;
   margin-bottom: 10px;

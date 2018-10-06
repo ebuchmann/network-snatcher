@@ -9,6 +9,7 @@ import ClearRequests from './ClearRequests';
 interface Props {
   requests: { [id: string]: Request };
   hostFilter: string;
+  selectedRequest: string;
   setRequest: (id: string) => void;
   setFilter: (text: string) => void;
   clearRequests: () => void;
@@ -16,7 +17,15 @@ interface Props {
 
 export class RequestList extends React.Component<Props, null> {
   render() {
-    const { hostFilter, setRequest, requests, setFilter, clearRequests } = this.props;
+    const {
+      hostFilter,
+      setRequest,
+      requests,
+      setFilter,
+      clearRequests,
+      selectedRequest,
+    } = this.props;
+
     const items = Object.values(requests)
       .filter(request => request.request.path.includes(hostFilter))
       .reverse()
@@ -26,6 +35,7 @@ export class RequestList extends React.Component<Props, null> {
           key={request.id}
           id={request.id}
           statusCode={request.response.statusCode}
+          selectedRequest={selectedRequest}
           {...request.request}
         />
       ));

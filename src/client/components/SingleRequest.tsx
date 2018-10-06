@@ -16,11 +16,9 @@ export class SingleRequest extends React.Component<Props, null> {
 
     const src = selectedTab === 'response' ? request.response.data : request.response.headers;
 
-    const test = { ...src, res2: src.residents, res3: src.residents, res4: src.residents };
-
     return (
       <ScrollContainer>
-        <ReactJson src={test} theme="monokai" displayDataTypes={false} name={false} />
+        <ReactJson src={src} theme="monokai" displayDataTypes={false} name={false} />
       </ScrollContainer>
     );
   }

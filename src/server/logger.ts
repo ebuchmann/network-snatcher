@@ -1,6 +1,7 @@
 import * as http from 'http';
 import * as zlib from 'zlib';
 import * as shortid from 'shortid';
+import { parse } from 'querystring';
 import { EventEmitter } from 'events';
 import { pick } from 'lodash';
 
@@ -13,7 +14,6 @@ interface Req {
 
 class Logger extends EventEmitter {
   original = null;
-  name = 'eric';
 
   init = async () => {
     this.original = http.request;
@@ -22,22 +22,38 @@ class Logger extends EventEmitter {
     http.request = (options, callback) => {
       const request = this.original(options, callback);
 
+      if (options.method.toUpperCase() === 'POST') {
+        console.log(options);
+      }
+
+      // if (options.hostname === '127.0.0.1') return request;
+
       const obj = {
         id: shortid.generate(),
-        headers: {},
         request: {} as Req,
         response: {
           data: {},
           headers: {},
           statusCode: null,
         },
+        startTime: Date.now(),
+        endTime: null,
       };
 
-      console.log(request);
       obj.request = pick(options, ['method', 'path', 'port', 'hostname']);
 
+      if (request.method.toUpperCase() === 'POST') {
+        let body = '';
+        request.on('data', chunk => {
+          console.log(chunk);
+          body += chunk.toString();
+        });
+        request.on('end', () => {
+          console.log(parse(body));
+        });
+      }
+
       request.on('response', async res => {
-        // console.log(res);
         obj.response.headers = res.headers;
         obj.response.statusCode = res.statusCode;
         if (res.headers['content-encoding'] === 'gzip') {
@@ -45,12 +61,12 @@ class Logger extends EventEmitter {
         } else {
           obj.response.data = await this.handleBuffer(res);
         }
+        obj.endTime = Date.now();
         this.emit('ended', obj);
       });
 
-      request.on('error', a => {
-        console.log('er');
-        console.log(a);
+      request.on('error', err => {
+        console.log(err);
       });
 
       return request;
@@ -64,7 +80,9 @@ class Logger extends EventEmitter {
       res.on('data', data => {
         str += data.toString();
       });
-      res.on('end', a => {
+      res.on('end', () => {
+        if (!str) return resolve();
+
         resolve(JSON.parse(str));
       });
       res.on('error', error => {
@@ -81,7 +99,6 @@ class Logger extends EventEmitter {
     return new Promise((resolve, reject) => {
       gunzip
         .on('data', function(data) {
-          // decompression chunk ready, add it to the buffer
           buffer.push(data.toString());
         })
         .on('end', function() {

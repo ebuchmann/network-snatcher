@@ -6,6 +6,7 @@ import { clearRequests } from '../store/actions/network';
 const mapStateToProps = (state, _ownProps) => ({
   requests: state.network,
   hostFilter: state.ui.hostFilter,
+  selectedRequest: state.ui.selectedRequest as string,
 });
 
 const mapDispatchToProps = dispatch => ({
