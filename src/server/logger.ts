@@ -21,10 +21,6 @@ class Logger extends EventEmitter {
     http.request = (options, callback) => {
       const request = this.original(options, callback);
 
-      if (options.method.toUpperCase() === 'POST') {
-        console.log(options);
-      }
-
       if (options.hostname === '127.0.0.1') return request;
 
       const obj = {
@@ -83,7 +79,11 @@ class Logger extends EventEmitter {
       res.on('end', () => {
         if (!str) return resolve();
 
-        resolve(JSON.parse(str));
+        try {
+          resolve(JSON.parse(str));
+        } catch (error) {
+          resolve(error);
+        }
       });
       res.on('error', error => {
         reject(error);
@@ -102,7 +102,11 @@ class Logger extends EventEmitter {
           buffer.push(data.toString());
         })
         .on('end', function() {
-          resolve(JSON.parse(buffer.join('')));
+          try {
+            resolve(JSON.parse(buffer.join('')));
+          } catch (error) {
+            resolve(error);
+          }
         })
         .on('error', function(e) {
           reject(e);
